@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>chart</title>
+    <link rel="stylesheet" href="../static/lib/semantic/dist/semantic.min.css"
+          th:href="@{/lib/semantic/dist/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/myAnimate.css" th:href="@{/css/myAnimate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css"
+          th:href="@{/lib/editormd/css/editormd.min.css}">
+
+    <style>
+        .elegant-text {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="openclose" class="ui top attached demo menu">
+    <div class="item" style="margin-right: 45px">
+        <img src="../static/images/bilogo.png" th:src="@{/images/bilogo.png}" alt="Logo" class="logo"
+             style="zoom:180%;">
+        <span style="margin-left: 5px">数据君智能BI</span>
+    </div>
+    <a id="topmenu" class="item" style="float:left;" onclick="toggleSidebar()">
+        <i class="sidebar icon"></i>
+        Menu
+    </a>
+</div>
+<div class="ui bottom attached segment pushable" style="display: flex">
+    <div id="sidebar" class="ui visible  left vertical sidebar menu"
+         style="position: sticky; top: 0; height: calc(100vh - 20px);  overflow-y: auto;">
+        <a class="item" th:href="@{/bi/index}">
+            <i class="home icon" style="float: left;margin-right: 15px"></i>
+            首页
+        </a>
+        <a class="item" th:href="@{/chart/sync/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--同步
+        </a>
+        <a class="item" th:href="@{/chart/pool/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步线程池
+        </a>
+        <a class="item " th:href="@{/chart/mq/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步消息队列
+        </a>
+        <a class="item active" th:href="@{/chart/my/list/page}">
+            <i class="smile icon " style="float: left;margin-right: 15px"></i>
+            我的图表
+        </a>
+<!--        <a class="item">-->
+<!--            <i class="calendar icon" style="float: left;margin-right: 15px"></i>-->
+<!--            History-->
+<!--        </a>-->
+        <div id="logout" class="bottom" style="bottom: 80px;position: absolute;margin-left: 20px">
+            <div class="ui dropdown">
+                <div class="text">
+                    <img class="ui avatar image"
+                         src="https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/src/assets/avatar.jpg">
+                    <span th:text="${session.user_login.userAccount}">账号</span>
+                </div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="#" th:href="@{/user/logout}" class="item">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pusher top attached" style="flex-grow: 1;overflow-y: auto;">
+        <div class="ui basic segment" style="text-align: left; vertical-align: middle; display: flex;  justify-content: left;
+    align-items: center;margin: 0 20px;">
+            <h3 class="ui header" style="color: #0d71bb"> 我的图表</h3>
+
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+
+        <div class="ui container grid">
+
+            <div class="ui attached segment eleven wide column" style="float: left">
+
+                <div class="ui padded vertical segment m-padded-tb-large" th:each="chart,iterStat : ${page.records}">
+
+                    <div class="ui middle aligned mobile reversed stackable">
+                        <div>
+                            <span class="m-text"
+                                  style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#1627e7;">
+                                执行状态：</span ><span th:text="${chart.status}" class="m-text"
+                                                   style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#ec131a;">succeed</span>
+                            <br>
+                            <br>
+                            <span th:if="${chart.execMessage}!= null" class="m-text"
+                                  style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#e71655;">
+                                失败原因：</span ><span th:if="${chart.execMessage}!= null" th:text="${chart.execMessage}" class="m-text"
+                                                   style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#ec131a;">succeed</span>
+                            <br>
+                            <br>
+                            <div>
+                                <b th:text="'图表名称:'+${chart.name}"
+                                   style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;">粗体</b><br/>
+                                <!--                                <p class="m-text" th:text="'图表名称:'+${chart.name}"-->
+                                <!--                                   style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;">-->
+                                <!--                                    正确做好任何一</p>-->
+
+                            </div>
+                            <div th:id="'container'+${iterStat.count}" style="height: 400px;width: 700px"></div>
+                            <br>
+                            <span class="m-text"
+                                  style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#1627e7;">
+                                分析目标</span>
+                            <br>
+                            <br>
+
+                            <div class="ui container">
+                                <p class="elegant-text" th:text="${chart.goal}">这是要展示的文本内容。</p>
+                            </div>
+                            <br>
+                            <br>
+                            <span class="m-text"
+                                  style="display: flex; justify-content: center; align-items: center; font-weight: bold;font-size: large;float: left;color:#1627e7;">
+                                智能分析结果</span>
+                            <br>
+                            <br>
+
+                            <div class="ui container">
+                                <p class="elegant-text" th:text="${chart.genResult}">这是要展示的文本内容。</p>
+                            </div>
+                            <br>
+
+                            <div class="item" style="float: left;alignment: left">
+                                <i class="calendar icon"></i><span
+                                    th:text="${#dates.format(chart.createTime,'yyyy-MM-dd')}">2017-10-01</span>
+                            </div>
+
+
+                            <script type="text/javascript"
+                                    src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+
+                            <script type="text/javascript" th:inline="javascript">
+
+                                var str = 'container' + [[${iterStat.count}]]
+                                // alert(str)
+
+                                var dom = document.getElementById(str);
+                                var myChart = echarts.init(dom, null, {
+                                    renderer: 'canvas',
+                                    useDirtyRect: false
+                                });
+                                var app = {};
+
+                                var optionStr = /*[[${chart.genChart}]]*/ '';
+                                // alert(optionStr)
+                                var option = JSON.parse(optionStr);
+
+
+                                if (option && typeof option === 'object') {
+                                    myChart.setOption(option);
+                                }
+
+                                window.addEventListener('resize', myChart.resize);
+                            </script>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script src="../static/lib/scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/scrollTo/jquery.scrollTo.min.js}"></script>
+
+<script src="../static/js/anime.min.js" th:src="@{/js/anime.min.js}"></script>
+<script src="../static/js/myAnimate.js" th:src="@{/js/myAnimate.js}"></script>
+<!--<script src="../static/js/star.js" th:src="@{/js/star.js}"></script>-->
+
+<!--<script type="text/javascript"-->
+<!--        color="100,100,100" opacity='0.4' zIndex="-2" count="100"-->
+<!--        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">-->
+<!--</script>-->
+
+<script>
+    // showing multiple
+    $('.visible.example .ui.sidebar')
+        .sidebar({
+            context: '.visible.example .bottom.segment'
+        }).sidebar('hide');
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    $('.context.example .ui.sidebar')
+        .sidebar({
+            context: $('.context.example .bottom.segment')
+        })
+        .sidebar('attach events', '.context.example .menu .item')
+    ;
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.add("visible");
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+</script>
+</html>

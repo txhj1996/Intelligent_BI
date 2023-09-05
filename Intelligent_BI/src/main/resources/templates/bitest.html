@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/lib/semantic/dist/semantic.min.css"
+          th:href="@{/lib/semantic/dist/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/myAnimate.css" th:href="@{/css/myAnimate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css"
+          th:href="@{/lib/editormd/css/editormd.min.css}">
+</head>
+<body>
+
+<div class="ui top fixed menu">
+    <div class="item">
+        <img class="logo" src="logo.png">
+    </div>
+    <a id="toggle-button" class="item">
+        <i id="toggle-icon" class="angle double right icon"></i> <!-- 菜单展开/隐藏的箭头图标 -->
+    </a>
+</div>
+
+<div class="ui bottom attached segment pushable">
+    <div id="sidebar" class="ui visible inverted left vertical sidebar menu">
+        <div class="item">
+            <img class="logo" src="logo.png">
+        </div>
+        <a class="item">
+            <i class="left aligned home icon"></i>
+            Home
+        </a>
+        <a class="item">
+            <i class="left aligned block layout icon"></i>
+            Topics
+        </a>
+        <a class="item">
+            <i class="left aligned smile icon"></i>
+            Friends
+        </a>
+        <a class="item">
+            <i class="left aligned calendar icon"></i>
+            History
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui basic segment">
+            <h3 class="ui header">Application Content</h3>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+<!--            <div id="toggle-button" class="ui icon button">-->
+<!--                <i id="toggle-icon" class="angle double right icon"></i> &lt;!&ndash; 添加菜单展开/隐藏的箭头图标 &ndash;&gt;-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script src="../static/lib/scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/scrollTo/jquery.scrollTo.min.js}"></script>
+
+<script src="../static/js/anime.min.js" th:src="@{/js/anime.min.js}"></script>
+<script src="../static/js/myAnimate.js" th:src="@{/js/myAnimate.js}"></script>
+<script src="../static/js/star.js" th:src="@{/js/star.js}"></script>
+
+<script type="text/javascript"
+        color="100,100,100" opacity='0.4' zIndex="-2" count="100"
+        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script>
+    $('.visible.example .ui.sidebar')
+        .sidebar({
+            context: '.visible.example .bottom.segment'
+        })
+        .sidebar('hide')
+    ;
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('toggle-button');
+        const toggleIcon = document.getElementById('toggle-icon');
+
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('visible'); // 切换菜单栏的可见性
+            toggleIcon.classList.toggle('left'); // 切换箭头图标的方向
+
+            if (sidebar.classList.contains('visible')) {
+                toggleIcon.className = 'angle double left icon'; // 菜单栏可见时，将箭头图标改为向左的图标
+            } else {
+                toggleIcon.className = 'angle double right icon'; // 菜单栏隐藏时，将箭头图标改为向右的图标
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>analysis</title>
+    <link rel="stylesheet" href="../static/lib/semantic/dist/semantic.min.css"
+          th:href="@{/lib/semantic/dist/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/myAnimate.css" th:href="@{/css/myAnimate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css"
+          th:href="@{/lib/editormd/css/editormd.min.css}">
+
+</head>
+<body>
+
+
+<div id="openclose" class="ui top attached demo menu">
+    <div class="item" style="margin-right: 45px">
+        <img src="../static/images/bilogo.png" th:src="@{/images/bilogo.png}" alt="Logo" class="logo" style="zoom:180%;">
+        <span style="margin-left: 5px">数据君智能BI</span>
+    </div>
+    <a id="topmenu" class="item" style="float:left;" onclick="toggleSidebar()">
+        <i class="sidebar icon"></i>
+        Menu
+    </a>
+</div>
+<div class="ui bottom attached segment pushable">
+    <div id="sidebar" class="ui visible  left vertical sidebar menu" style="">
+        <a class="item" th:href="@{/bi/index}">
+            <i class="home icon" style="float: left;margin-right: 15px"></i>
+            首页
+        </a>
+        <a class="item" th:href="@{/chart/sync/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--同步
+        </a>
+        <a class="item active" th:href="@{/chart/pool/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步线程池
+        </a>
+        <a class="item " th:href="@{/chart/mq/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步消息队列
+        </a>
+        <a class="item" th:href="@{/chart/my/list/page}">
+            <i class="smile icon" style="float: left;margin-right: 15px"></i>
+           我的图表
+        </a>
+<!--        <a class="item" th:href="@{/}">-->
+<!--            <i class="calendar icon" style="float: left;margin-right: 15px"></i>-->
+<!--            History-->
+<!--        </a>-->
+        <div id="logout" class="bottom" style="bottom: 80px;position: absolute;margin-left: 20px">
+            <div class="ui dropdown">
+                <div class="text">
+                    <img class="ui avatar image" src="https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/src/assets/avatar.jpg" >
+                    <span th:text="${session.user_login.userAccount}">账号</span>
+                </div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="#" th:href="@{/user/logout}" class="item">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pusher ">
+        <div class="ui basic segment" style="text-align: left; vertical-align: middle; display: flex;  justify-content: left;
+    align-items: center;">
+            <h3 class="ui header" style="color: #0d71bb">智能分析</h3>
+
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+
+
+
+        <form class="ui form" method="post" th:action="@{/chart/pool/gen}" enctype="multipart/form-data">
+            <div class="ui segment">
+                <div id="field1" class="field">
+                    <div class="ui left icon input  grid">
+                        <div class="two wide column " style="text-align: left; vertical-align: middle; display: flex;    justify-content: left;
+    align-items: center;">
+                            <span style="margin-left: 50px;color: red" >*</span>分析目标
+                        </div>
+                        <div class="nine wide column" >
+                            <textarea name="goal" rows="2"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="field2" class="field">
+                    <div class="ui left icon input  grid">
+                        <div class="two wide column " style="text-align: left; vertical-align: middle; display: flex;    justify-content: left;
+    align-items: center;">
+                            <span style="margin-left: 50px">*图表名称</span>
+                        </div>
+                        <div class="nine wide column">
+                            <textarea name="name" rows="2"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="field3" class="field">
+                    <div class="ui left icon input  grid">
+                        <div class="two wide column " style="text-align: left; vertical-align: middle; display: flex;    justify-content: left;
+    align-items: center;">
+                            <span style="margin-left: 50px">*图表类型</span>
+                        </div>
+                        <div class="nine wide column">
+                            <input type="text" name="chartType" style="width: 100%">
+                        </div>
+
+                    </div>
+                </div>
+                <div id="field4" class="field">
+                    <div class="ui left icon input  grid">
+                        <div class="two wide column " style="text-align: left; vertical-align: middle; display: flex;    justify-content: left;
+    align-items: center;">
+                            <span style="margin-left: 50px">*原始数据</span>
+                        </div>
+                        <div class="nine wide column">
+                            <input type="file" name="file" value="请选择excel文件">
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <br>
+                <button class="ui   blue submit button" style="margin-left: 230px">提交</button>
+                <br>
+                <br>
+                <div id="field5" class="field" style="float: left">
+                    <div class="ui container" style="width:500px" >
+                        <div style="margin-left: 80px" class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">任务以提交成功，稍后请到`我的图表`中查看结果(*^_^*)</div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script src="../static/lib/scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/scrollTo/jquery.scrollTo.min.js}"></script>
+
+<script src="../static/js/anime.min.js" th:src="@{/js/anime.min.js}"></script>
+<script src="../static/js/myAnimate.js" th:src="@{/js/myAnimate.js}"></script>
+<!--<script src="../static/js/star.js" th:src="@{/js/star.js}"></script>-->
+
+<!--<script type="text/javascript"-->
+<!--        color="100,100,100" opacity='0.4' zIndex="-2" count="100"-->
+<!--        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">-->
+<!--</script>-->
+
+<script>
+    // showing multiple
+    $('.visible.example .ui.sidebar')
+        .sidebar({
+            context: '.visible.example .bottom.segment'
+        }).sidebar('hide');
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    $('.context.example .ui.sidebar')
+        .sidebar({
+            context: $('.context.example .bottom.segment')
+        })
+        .sidebar('attach events', '.context.example .menu .item')
+    ;
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.add("visible");
+    });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+</script>
+</html>

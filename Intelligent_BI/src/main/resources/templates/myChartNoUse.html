@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>chart</title>
+    <link rel="stylesheet" href="../static/lib/semantic/dist/semantic.min.css"
+          th:href="@{/lib/semantic/dist/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/myAnimate.css" th:href="@{/css/myAnimate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css"
+          th:href="@{/lib/editormd/css/editormd.min.css}">
+
+</head>
+<body>
+
+
+<div id="openclose" class="ui top attached demo menu">
+    <div class="item" style="margin-right: 45px">
+        <img src="../static/images/avatar.png" alt="Logo" class="logo">
+        <span style="margin-left: 5px">数据君智能BI</span>
+    </div>
+    <a id="topmenu" class="item" style="float:left;" onclick="toggleSidebar()">
+        <i class="sidebar icon"></i>
+        Menu
+    </a>
+</div>
+<div class="ui bottom attached segment pushable">
+    <div id="sidebar" class="ui visible  left vertical sidebar menu" style="position: sticky">
+        <a class="item" th:href="@{/}">
+            <i class="home icon" style="float: left;margin-right: 15px"></i>
+            首页
+        </a>
+        <a class="item" th:href="@{/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析
+        </a>
+        <a class="item active" th:href="@{/mychart}">
+            <i class="smile icon " style="float: left;margin-right: 15px"></i>
+            我的图表
+        </a>
+        <a class="item">
+            <i class="calendar icon" style="float: left;margin-right: 15px"></i>
+            History
+        </a>
+    </div>
+    <div class="pusher ">
+        <div class="ui basic segment" style="text-align: left; vertical-align: middle; display: flex;  justify-content: left;
+    align-items: center;">
+            <h3 class="ui header" style="color: #0d71bb">我的图表</h3>
+
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+
+        <div class="ui container grid">
+
+            <div class="ui attached segment eleven wide column" style="float: left">
+
+
+
+                <div class="ui padded vertical segment m-padded-tb-large" th:if="${#lists.size(page.records)} >= 1" >
+                    分析图
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="sixteen wide column">
+                            <div>
+                                <p text="tom...." th:text="${page.records[0].name}">tom</p>
+                                <p text="tom...." th:text="${#lists.size(page.records)}">tom</p>
+
+
+                                <p text="tom...." th:text="${page.records[0].name}"></p>
+                                <p class="m-text" >正确做好任何一</p>
+
+                            </div>
+                            <div  id="container1" style="height: 400px;width: 700px"></div>
+
+
+                            <script type="text/javascript"
+                                    src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+
+                            <script type="text/javascript" th:inline="javascript">
+
+
+                                // alert(str)
+
+                                var dom = document.getElementById('container1');
+                                var myChart = echarts.init(dom, null, {
+                                    renderer: 'canvas',
+                                    useDirtyRect: false
+                                });
+                                var app = {};
+
+                                // var optionStr = /*[[${page.records[0].genChart}]]*/ '';
+                                // var option = JSON.parse(optionStr);
+                                var option =/*[[${page.records[0].genChart}]]*/{
+                                    tooltip: {
+                                        trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+                                        axisPointer: {// 坐标轴指示器，坐标轴触发有效
+                                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                                        }
+                                    },
+
+                                    "xAxis": {
+                                        type: 'category',
+                                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                    },
+                                    yAxis: {
+                                        type: 'value'
+                                    },
+                                    series: [
+                                        {
+                                            data: [150, 230, 224, 218, 135, 147, 260],
+                                            type: 'line'
+                                        }
+                                    ]
+                                };
+                                myChart.on('mousemove', function(params) {
+                                    // 在这里处理鼠标移动事件
+                                    console.log(params);
+                                });
+                                if (option && typeof option === 'object') {
+                                    myChart.setOption(option);
+                                }
+
+                                window.addEventListener('resize', myChart.resize);
+                            </script>
+
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large" th:if="${#lists.size(page.records)} >= 2" >
+                    分析图
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="sixteen wide column">
+                            <div>
+                                <p text="tom...." th:text="${page.records[1].name}">tom</p>
+                                <p text="tom...." th:text="${#lists.size(page.records)}">tom</p>
+
+
+                                <p text="tom...." th:text="${page.records[1].genResult}"></p>
+                                <p text="tom...." th:text="${page.records[1].genChart}"></p>
+                                <p class="m-text" >正确做好任何一</p>
+
+                            </div>
+                            <div  id="container2" style="height: 400px;width: 700px"></div>
+
+
+                            <script type="text/javascript"
+                                    src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+
+                            <script type="text/javascript" th:inline="javascript">
+
+
+                                // alert(str)
+
+                                var dom2 = document.getElementById('container2');
+                                var myChart2 = echarts.init(dom2, null, {
+                                    renderer: 'SVG',
+                                    useDirtyRect: false
+                                });
+                                var app2 = {};
+
+                                var optionStr2 = /*[[${page.records[1].genChart}]]*/ '';
+                                var option2 = JSON.parse(optionStr2);
+
+                                if (option2 && typeof option2 === 'object') {
+                                    myChart2.setOption(option2);
+                                }
+
+                                window.addEventListener('resize', myChart2.resize);
+                            </script>
+
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large" th:if="${#lists.size(page.records)} >= 3" >
+                    分析图
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="sixteen wide column">
+                            <div>
+                                <p text="tom...." th:text="${page.records[0].name}">tom</p>
+                                <p text="tom...." th:text="${#lists.size(page.records)}">tom</p>
+
+
+                                <p text="tom...." th:text="${page.records[0].name}"></p>
+                                <p class="m-text" >正确做好任何一</p>
+
+                            </div>
+                            <div  id="container3" style="height: 400px;width: 700px"></div>
+
+
+                            <script type="text/javascript"
+                                    src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+
+                            <script type="text/javascript" th:inline="javascript">
+
+
+                                // alert(str)
+
+                                var dom = document.getElementById('container3');
+                                var myChart = echarts.init(dom, null, {
+                                    renderer: 'canvas',
+                                    useDirtyRect: false
+                                });
+                                var app = {};
+
+                                var option = {
+                                    xAxis: {
+                                        type: 'category',
+                                        data: [1, 2, 3, 4, 5, 6, 7]
+                                    },
+                                    yAxis: {
+                                        type: 'value'
+                                    },
+                                    series: [{
+                                        data: [1, 10, 5, 6, 6, 7, 9],
+                                        type: 'scatter'
+                                    }]
+                                };
+
+
+                                if (option && typeof option === 'object') {
+                                    myChart.setOption(option);
+                                }
+
+                                window.addEventListener('resize', myChart.resize);
+                            </script>
+
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large" th:if="${#lists.size(page.records)} >= 4" >
+                    分析图
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="sixteen wide column">
+                            <div>
+                                <p text="tom...." th:text="${page.records[0].name}">tom</p>
+                                <p text="tom...." th:text="${#lists.size(page.records)}">tom</p>
+
+
+                                <p text="tom...." th:text="${page.records[0].name}"></p>
+                                <p class="m-text" >正确做好任何一</p>
+
+                            </div>
+                            <div  id="container4" style="height: 400px;width: 700px"></div>
+
+
+                            <script type="text/javascript"
+                                    src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+
+                            <script type="text/javascript" th:inline="javascript">
+
+
+                                // alert(str)
+
+                                var dom = document.getElementById('container4');
+                                var myChart = echarts.init(dom, null, {
+                                    renderer: 'canvas',
+                                    useDirtyRect: false
+                                });
+                                var app = {};
+
+                                var optionStr = /*[[${page.records[3].genChart}]]*/ '';
+                                var option = JSON.parse(optionStr);
+
+                                if (option && typeof option === 'object') {
+                                    myChart.setOption(option);
+                                }
+
+                                window.addEventListener('resize', myChart.resize);
+                            </script>
+
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!--/*-->
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ui padded vertical segment m-padded-tb-large">
+                    <div class="ui mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+                            <p class="m-text">
+                                正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                 class="ui avatar image">
+                                            <div class="content"><a href="#" class="header">李仁密</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i> 2017-10-01
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> 2342
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <!--*/-->
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script src="../static/lib/scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/scrollTo/jquery.scrollTo.min.js}"></script>
+
+<script src="../static/js/anime.min.js" th:src="@{/js/anime.min.js}"></script>
+<script src="../static/js/myAnimate.js" th:src="@{/js/myAnimate.js}"></script>
+<!--<script src="../static/js/star.js" th:src="@{/js/star.js}"></script>-->
+
+<!--<script type="text/javascript"-->
+<!--        color="100,100,100" opacity='0.4' zIndex="-2" count="100"-->
+<!--        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">-->
+<!--</script>-->
+
+<script>
+    // showing multiple
+    $('.visible.example .ui.sidebar')
+        .sidebar({
+            context: '.visible.example .bottom.segment'
+        }).sidebar('hide');
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    $('.context.example .ui.sidebar')
+        .sidebar({
+            context: $('.context.example .bottom.segment')
+        })
+        .sidebar('attach events', '.context.example .menu .item')
+    ;
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.add("visible");
+    });
+
+
+</script>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="../static/lib/semantic/dist/semantic.min.css"
+          th:href="@{/lib/semantic/dist/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/myAnimate.css" th:href="@{/css/myAnimate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css"
+          th:href="@{/lib/editormd/css/editormd.min.css}">
+
+    <style>
+
+
+        h2 {
+            color: #9d1515;
+        }
+
+        li, p {
+            font-size: 20px;
+            color: #443d3d;
+            line-height: 2.5;
+            text-indent: 2em;
+            margin-bottom: 0px;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="openclose" class="ui top attached demo menu">
+    <div class="item" style="margin-right: 45px">
+        <img src="../static/images/bilogo.png" th:src="@{/images/bilogo.png}" alt="Logo" class="logo" style="zoom:180%;">
+        <span style="margin-left: 5px">数据君智能BI</span>
+    </div>
+    <a id="topmenu" class="item" style="float:left;" onclick="toggleSidebar()">
+        <i class="sidebar icon"></i>
+        Menu
+    </a>
+</div>
+<div class="ui bottom attached segment pushable" style="display: flex">
+    <div id="sidebar" class="ui visible  left vertical sidebar menu"
+         style="position: sticky; top: 0; height: calc(100vh - 20px);  overflow-y: auto;width: 550px;bottom: 0;">
+        <a class="item active" th:href="@{/bi/index}">
+            <i class="home icon" style="float: left;margin-right: 15px"></i>
+            首页
+        </a>
+        <a class="item" th:href="@{/chart/sync/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--同步
+        </a>
+        <a class="item" th:href="@{/chart/pool/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步线程池
+        </a>
+        <a class="item " th:href="@{/chart/mq/analysis}">
+            <i class="block layout icon " style="float: left;margin-right: 15px"></i>
+            智能分析--异步消息队列
+        </a>
+        <a class="item " th:href="@{/chart/my/list/page}">
+            <i class="smile icon " style="float: left;margin-right: 15px"></i>
+            我的图表
+        </a>
+<!--        <a class="item">-->
+<!--            <i class="calendar icon" style="float: left;margin-right: 15px"></i>-->
+<!--            History-->
+<!--        </a>-->
+
+        <div id="logout" class="bottom" style="bottom: 80px;position: absolute;margin-left: 20px">
+            <div class="ui dropdown">
+                <div class="text">
+                    <img class="ui avatar image" src="https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/src/assets/avatar.jpg" >
+                    <span th:text="${session.user_login.userAccount}">账号</span>
+                </div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="#" th:href="@{/user/logout}" class="item">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pusher top attached" style="flex-grow: 1;overflow-y: auto;margin-right: 0px">
+<!--        <div class="ui basic segment" style="text-align: left; vertical-align: middle; display: flex;  justify-content: left;-->
+<!--    align-items: center;margin: 0 20px;">-->
+<!--            &lt;!&ndash;            <h3 class="ui header" style="color: #0d71bb">智能分析</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p></p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p></p>&ndash;&gt;-->
+<!--        </div>-->
+        <div class="ui basic segment" style="margin-left: 0px;padding-right: 500px;">
+
+            <div>
+                <img src="../static/images/bilogo.png" th:src="@{/images/bilogo.png}" alt="Logo" class="logo" style="zoom:20%;margin-left: 2000px">
+                <h2>介绍</h2>
+
+                <p>
+                    智能BI平台是一个创新而强大的数据分析工具，凭借先进的AI技术，为您提供全面、准确和深入的数据分析和洞察。无论您是企业管理者、数据科学家还是市场营销专业人士，我们的平台都能帮助您轻松掌握和利用数据的潜力。通过我们的智能BI平台，即使对数据分析一无所知的新手也能够轻松完成复杂的数据分析任务，大幅节约人力成本，让数据分析变得简单而智能！</p>
+
+                <p>
+                    智能BI平台改变传统数据分析的方式。在过去，数据分析师需要投入大量时间和精力来导入、清理和准备数据，并选择适当的图表类型，然后进行数据分析以得出结论。这个过程耗时且复杂，对于不擅长数据分析的用户来说更是一项挑战。</p>
+
+                <p>
+                    然而，智能BI平台解决了这些问题。智能BI平台的最大优势在于让不具备数据分析技能的人员也能快速进行数据分析。利用AI接口，根据用户输入的分析目标和原始数据，快速生成高质量的可视化图表和详细的分析结论。这将大幅降低公司和组织的人工数据分析成本，提高工作效率，并为决策提供更有力的支持。</p>
+
+
+                <p>此外，该平台还包含其他功能，如图表管理和异步生成。通过图表管理功能，用户能够轻松管理已生成的图表。而异步生成功能使用户能够在图表生成的同时进行其他操作，进一步提高工作效率。</p>
+
+                <p>总而言之，智能BI平台将为数据分析领域带来一场革命。借助AI技术的应用，智能BI平台能够满足专业与非专业用户的需求，让数据分析过程变得简单高效。</p>
+
+                <h2>特点</h2>
+
+                <p>1.自动化数据分析：采用AI技术，能够自动生成符合要求的图表和分析结论，用户只需提供分析目标和原始数据即可完成数据分析，无需专业知识。</p>
+                <p>2.节约人力成本：能大幅降低人工数据分析成本，让非专业用户也能快速完成数据分析任务。</p>
+                <p>3.简化操作流程：提供图表管理和异步生成功能，方便用户管理、保存和操作生成的图表，提升工作效率。</p>
+                <p>4.可视化结果：使用AI接口生成可视化的分析结果，帮助用户更好地理解和解读数据，支持更明智的决策。</p>
+                <p>5.广泛适用范围：适用于各行业和领域，从最原始的数据集进行分析，用户只需提供数据和分析目标即可快速获得分析结果。</p>
+
+
+                <h2>用户手册</h2>
+
+                <h3>准备工作</h3>
+                <p>用户只需要准备含有数据的excel文件即可，excel表格的第一行为字段名，后面是对应的字段值，格式如下：</p>
+
+                <div class="center">
+                    <img src="https://images-for-typora.oss-cn-shanghAI.aliyuncs.com/202308091919455.png"
+                         alt="Excel表格示例">
+                </div>
+
+                <h3>使用步骤</h3>
+
+                <p>1.填写分析目标，图表名称，图表类型，并上传原始数据。</p>
+                <p>2.点击提交进行分析。如果是异步分析，可以继续提交下一个分析。</p>
+                <h3>成功示例</h3>
+                <div class="center">
+                    <img src="https://images-for-typora.oss-cn-shanghai.aliyuncs.com/202308092019867.png" alt="成功示例"
+                         style="zoom:60%;">
+                </div>
+
+                <h2>注意事项</h2>
+
+                <p>1.为确保AI能够有效分析数据并成功完成分析任务，请选择数据量较小的Excel文件进行测试。如果选择过大的文件，AI可能会受到限制而无法进行分析。经过测试，能处理2列50行的数据，也就是100个单元格，当然也取决于每个单元格数据的长度。随着未来AI处理能力的提高，本平台能发挥更大的功能。</p>
+                <p>2.考虑到AI分析需要耗费资源和成本，请适度进行测试，避免过度尝试。</p>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+<script src="../static/lib/jquery/jquery-3.2.1.min.js" th:src="@{/lib/jquery/jquery-3.2.1.min.js}"></script>
+<script src="../static/lib/semantic/dist/semantic.min.js" th:src="@{/lib/semantic/dist/semantic.min.js}"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>-->
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script src="../static/lib/scrollTo/jquery.scrollTo.min.js" th:src="@{/lib/scrollTo/jquery.scrollTo.min.js}"></script>
+
+<script src="../static/js/anime.min.js" th:src="@{/js/anime.min.js}"></script>
+<script src="../static/js/myAnimate.js" th:src="@{/js/myAnimate.js}"></script>
+<!--<script src="../static/js/star.js" th:src="@{/js/star.js}"></script>-->
+
+<!--<script type="text/javascript"-->
+<!--        color="100,100,100" opacity='0.4' zIndex="-2" count="100"-->
+<!--        src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">-->
+<!--</script>-->
+
+<script>
+    // showing multiple
+    $('.visible.example .ui.sidebar')
+        .sidebar({
+            context: '.visible.example .bottom.segment'
+        }).sidebar('hide');
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    $('.context.example .ui.sidebar')
+        .sidebar({
+            context: $('.context.example .bottom.segment')
+        })
+        .sidebar('attach events', '.context.example .menu .item')
+    ;
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.add("visible");
+    });
+
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+
+</script>
+</html>
